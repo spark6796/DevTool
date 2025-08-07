@@ -3,3 +3,76 @@ Home .title {
     width: 100%;
     padding: 1 2;
 }
+
+Home .buttons {
+    align: center middle;
+}
+
+Home Button {
+    # border: solid red;
+    width: 20%;
+    margin: 0 1;
+}
+
+NewProjectScreen {
+        align: center middle;
+    }
+NewProjectScreen .form-buttons {
+        align: center middle;
+    
+    }
+NewProjectScreen .form-container {
+        width: 60;
+        height: auto;
+        padding: 2;
+    }
+
+NewProjectScreen .form-container {
+        width: 60;
+        height: auto;
+        padding: 2;
+    }
+
+NewProjectScreen .directory-row {
+        align: center middle;
+        margin: 1 0;
+    }
+    
+NewProjectScreen .directory-row Input {
+        width: 1fr;
+        margin-right: 1;
+    }
+
+
+NewProjectScreen .current-dir {
+        color: $success;
+        text-style: italic;
+        margin-bottom: 1;
+    }
+
+SvelteConfigScreen .options-buttons {
+    align: center middle;
+    width: 100%;
+}
+
+SvelteConfigScreen .options-group {
+    dock: left;
+    height: 100%;
+    width: 50%;
+}
+
+SvelteConfigScreen .field-label {
+    margin-top: 2;
+}
+
+SvelteConfigScreen .addon-group {
+    dock: right;
+    height: 100%;
+    overflow-y: scroll;
+    width: 50%;
+}
+
+SvelteConfigScreen .config-title{
+    margin-top: 2;
+    width: 100%;
+}
