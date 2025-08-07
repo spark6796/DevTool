@@ -12,6 +12,7 @@ from textual.widgets import Button, Input, Select, Static
 
 from utils.project_validator import validate_project
 
+from .react_config import ReactConfigScreen
 from .svelte_config import SvelteConfigScreen
 
 
@@ -116,6 +117,8 @@ class NewProjectScreen(Screen):
 
             if project_type == "svelte_app":
                 self.app.push_screen(SvelteConfigScreen(name, directory))
+            elif project_type == "react_app":
+                self.app.push_screen(ReactConfigScreen(name, directory))
 
         except subprocess.CalledProcessError as e:
             self.app.notify(

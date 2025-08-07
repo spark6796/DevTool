@@ -10,3 +10,11 @@ svelte_addons = {
     "mdsvex": "mdsvex",
     "paraglide": "@inlang/paraglide-js @inlang/paraglide-sveltekit",
 }
+
+react_addons = [
+    "eslint",
+    "tailwindcss",
+    "src_directory",
+    "app_router",
+    "turbopack",
+]

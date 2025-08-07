@@ -76,3 +76,31 @@ SvelteConfigScreen .config-title{
     margin-top: 2;
     width: 100%;
 }
+
+
+ReactConfigScreen .options-buttons {
+    align: center middle;
+    width: 100%;
+}
+
+ReactConfigScreen .options-group {
+    dock: left;
+    height: 100%;
+    width: 50%;
+}
+
+ReactConfigScreen .field-label {
+    margin-top: 2;
+}
+
+ReactConfigScreen .addon-group {
+    dock: right;
+    height: 100%;
+    overflow-y: scroll;
+    width: 50%;
+}
+
+ReactConfigScreen .config-title{
+    margin-top: 2;
+    width: 100%;
+}
