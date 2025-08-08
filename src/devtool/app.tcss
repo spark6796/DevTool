@@ -104,3 +104,23 @@ ReactConfigScreen .config-title{
     margin-top: 2;
     width: 100%;
 }
+
+FastApiConfigScreen .config-title {
+    margin-top: 1;
+    width: 100%;
+    align: center middle;
+}
+FastApiConfigScreen .field-label {
+    margin-top: 3;
+    content-align: center middle;
+}
+FastApiConfigScreen Select {
+    margin-top: 1;
+    width: 25%;
+    offset-x: 46;
+    align: center middle;
+}
+FastApiConfigScreen .options-buttons {
+    margin-top: 3;
+    align: center middle;
+}

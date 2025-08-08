@@ -13,6 +13,7 @@ from textual.widgets import Button, Input, Select, Static
 from utils.project_validator import validate_project
 
 from .react_config import ReactConfigScreen
+from .fastapi_config import FastApiConfigScreen
 from .svelte_config import SvelteConfigScreen
 
 
@@ -34,9 +35,6 @@ class NewProjectScreen(Screen):
                         ("React App", "react_app"),
                         ("Svelte App", "svelte_app"),
                         ("FastAPI App", "fastapi_app"),
-                        ("Arcade (Python)", "arcade_app"),
-                        ("Python CLI", "python_cli"),
-                        ("Node.js App", "nodejs_app"),
                     ],
                     id="project_type",
                     prompt="Select project type",
@@ -119,6 +117,8 @@ class NewProjectScreen(Screen):
                 self.app.push_screen(SvelteConfigScreen(name, directory))
             elif project_type == "react_app":
                 self.app.push_screen(ReactConfigScreen(name, directory))
+            elif project_type == 'fastapi_app':
+                self.app.push_screen(FastApiConfigScreen(name, directory))
 
         except subprocess.CalledProcessError as e:
             self.app.notify(
