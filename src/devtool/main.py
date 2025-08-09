@@ -1,4 +1,4 @@
-from app import DevTools
+from .app import DevTools
 
 
 def main():

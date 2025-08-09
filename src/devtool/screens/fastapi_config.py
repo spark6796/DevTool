@@ -7,7 +7,7 @@ from textual.screen import Screen
 from textual.widgets import Button, Select, Static
 from textual_pyfiglet import FigletWidget
 
-from project_creators.fastapi_creater import FastApiCreator
+from ..project_creators.fastapi_creater import FastApiCreator
 
 
 class FastApiConfigScreen(Screen):
@@ -39,13 +39,12 @@ class FastApiConfigScreen(Screen):
                 prompt="Select Package manager",
                 value="uv",
                 disabled=True,
-                classes='field-select'
+                classes="field-select",
             )
 
             with Horizontal(classes="options-buttons"):
                 yield Button("Create Project", variant="success", id="create_fastapi")
                 yield Button("Back", variant="default", id="back")
-
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "back":
@@ -56,18 +55,16 @@ class FastApiConfigScreen(Screen):
             self.app.notify(f"🚀 Creating FastApi app: {self.project_name}...")
 
             def runner(name: str, directory: Path):
-                result = FastApiCreator.create(name,directory)
-                if result !=0:
+                result = FastApiCreator.create(name, directory)
+                if result != 0:
                     error_msg = f"❌ Error creating project: {str(result.stderr)}"
                     self.app.call_from_thread(
-                        self.app.notify, 
-                        error_msg, 
-                        severity="error"
+                        self.app.notify, error_msg, severity="error"
                     )
 
             thread = threading.Thread(
                 target=runner,
-                args=[self.project_name,self.project_directory],
+                args=[self.project_name, self.project_directory],
                 daemon=True,
             )
             thread.start()

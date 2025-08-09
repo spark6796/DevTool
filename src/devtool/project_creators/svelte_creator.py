@@ -1,6 +1,6 @@
 import subprocess
 
-from config import svelte_addons
+from ..config import svelte_addons
 
 
 class SvelteCreator:
@@ -11,7 +11,7 @@ class SvelteCreator:
         template: str = "demo",
         typescript: str = "typescript",
         selected_addons: list = [],
-    ) -> str:
+    ) -> None:
 
         types_map = {"typescript": "ts", "javascript": "jsdoc"}
 
@@ -47,5 +47,3 @@ class SvelteCreator:
 
                     if addon_result.returncode != 0:
                         print(f"Warning: Failed to install {addon}")
-
-        return result

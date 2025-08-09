@@ -5,7 +5,8 @@ from textual.widget import Widget
 from textual.widgets import Button
 from textual_pyfiglet import FigletWidget
 
-from screens.new_project import NewProjectScreen
+from ..screens.new_project import NewProjectScreen
+from ..screens.stats import StatsScreen
 
 
 class Home(Widget):
@@ -36,6 +37,7 @@ class Home(Widget):
     @on(Button.Pressed, "#stats")
     def handle_stats(self, event: Button.Pressed) -> None:
         self.app.notify("Opening Project Stats...")
+        self.app.push_screen(StatsScreen())
 
     @on(Button.Pressed, "#utils")
     def handle_utils(self, event: Button.Pressed) -> None:

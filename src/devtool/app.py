@@ -1,7 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Header
 
-from widgets.home import Home
+from .widgets.home import Home
 
 
 class DevTools(App):

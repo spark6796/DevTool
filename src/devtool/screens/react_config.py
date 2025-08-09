@@ -7,8 +7,8 @@ from textual.screen import Screen
 from textual.widgets import Button, Checkbox, Select, Static
 from textual_pyfiglet import FigletWidget
 
-from config import react_addons
-from project_creators.react_creator import ReactCreator
+from ..config import react_addons
+from ..project_creators.react_creator import ReactCreator
 
 
 class ReactConfigScreen(Screen):

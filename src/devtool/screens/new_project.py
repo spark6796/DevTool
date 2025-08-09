@@ -10,10 +10,9 @@ from textual.containers import Container, Horizontal
 from textual.screen import Screen
 from textual.widgets import Button, Input, Select, Static
 
-from utils.project_validator import validate_project
-
-from .react_config import ReactConfigScreen
+from ..utils.project_validator import validate_project
 from .fastapi_config import FastApiConfigScreen
+from .react_config import ReactConfigScreen
 from .svelte_config import SvelteConfigScreen
 
 
@@ -93,8 +92,8 @@ class NewProjectScreen(Screen):
         elif button_id == "create":
 
             name = self.query_one("#project_name", Input).value.strip()
-            project_type = self.query_one("#project_type", Select).value
-            directory = self.query_one("#project_directory", Input).value.strip()
+            project_type = str(self.query_one("#project_type", Select).value)
+            directory = Path(self.query_one("#project_directory", Input).value.strip())
 
             error_msg = validate_project(name, project_type, directory)
 
@@ -117,7 +116,7 @@ class NewProjectScreen(Screen):
                 self.app.push_screen(SvelteConfigScreen(name, directory))
             elif project_type == "react_app":
                 self.app.push_screen(ReactConfigScreen(name, directory))
-            elif project_type == 'fastapi_app':
+            elif project_type == "fastapi_app":
                 self.app.push_screen(FastApiConfigScreen(name, directory))
 
         except subprocess.CalledProcessError as e:

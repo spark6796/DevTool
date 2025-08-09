@@ -8,7 +8,7 @@ class ReactCreator:
         name: str,
         typescript: str = "typescript",
         selected_addons: list = [],
-    ) -> str:
+    ) -> None:
 
         cmd = ["npx", "create-next-app@latest", name]
 
@@ -43,11 +43,9 @@ class ReactCreator:
         cmd.extend(["--import-alias", "'@/*'"])
         cmd.append("--yes")
 
-        result = subprocess.run(
+        subprocess.run(
             " ".join(cmd),
             text=True,
             capture_output=True,
             shell=True,
         )
-
-        return result

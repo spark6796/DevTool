@@ -7,8 +7,8 @@ from textual.screen import Screen
 from textual.widgets import Button, Checkbox, Select, Static
 from textual_pyfiglet import FigletWidget
 
-from config import svelte_addons
-from project_creators.svelte_creator import SvelteCreator
+from ..config import svelte_addons
+from ..project_creators.svelte_creator import SvelteCreator
 
 
 class SvelteConfigScreen(Screen):
