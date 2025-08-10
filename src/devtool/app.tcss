@@ -1,6 +1,7 @@
 Home .title {
     color: grey;
     width: 100%;
+    content-align: center middle;
     padding: 1 2;
 }
 
@@ -70,6 +71,7 @@ SvelteConfigScreen .addon-group {
 SvelteConfigScreen .config-title{
     margin-top: 2;
     width: 100%;
+    content-align: center middle;
 }
 
 
@@ -98,12 +100,13 @@ ReactConfigScreen .addon-group {
 ReactConfigScreen .config-title{
     margin-top: 2;
     width: 100%;
+    content-align: center middle;
 }
 
 FastApiConfigScreen .config-title {
     margin-top: 1;
     width: 100%;
-    align: center middle;
+    content-align: center middle;
 }
 FastApiConfigScreen .field-label {
     margin-top: 3;

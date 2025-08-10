@@ -5,9 +5,8 @@ from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.screen import Screen
 from textual.widgets import Button, Checkbox, Select, Static
-from textual_pyfiglet import FigletWidget
 
-from devtool.config import react_addons
+from devtool.config import react_addons, REACT_TITLE
 from devtool.project_creators.react_creator import ReactCreator
 
 
@@ -21,15 +20,9 @@ class ReactConfigScreen(Screen):
     def compose(self) -> ComposeResult:
 
         with Vertical(classes="options-group"):
-            yield FigletWidget(
-                "REACT",
+            yield Static(
+                REACT_TITLE,
                 classes="config-title",
-                font="ansi_shadow",
-                animate=True,
-                animation_type="gradient",
-                justify="center",
-                fps=5,
-                colors=["cyan", "blue"],
             )
             yield Static("Template:", classes="field-label")
             yield Select(
@@ -103,8 +96,7 @@ class ReactConfigScreen(Screen):
             )
 
             self.app.notify(
-                "Please be patient let the project setup it may take a while...",
-                severity="information",
+                "Please be patient let the project setup it may take a while...",severity="information"
             )
 
             self.app.pop_screen()
