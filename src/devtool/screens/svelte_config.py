@@ -5,9 +5,8 @@ from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.screen import Screen
 from textual.widgets import Button, Checkbox, Select, Static
-from textual_pyfiglet import FigletWidget
 
-from devtool.config import svelte_addons
+from devtool.config import svelte_addons, SVELTE_TITLE
 from devtool.project_creators.svelte_creator import SvelteCreator
 
 
@@ -21,15 +20,9 @@ class SvelteConfigScreen(Screen):
     def compose(self) -> ComposeResult:
 
         with Vertical(classes="options-group"):
-            yield FigletWidget(
-                "Svelte",
+            yield Static(
+                SVELTE_TITLE,
                 classes="config-title",
-                font="ansi_shadow",
-                animate=True,
-                animation_type="gradient",
-                justify="center",
-                fps=5,
-                colors=["red", "orange"],
             )
             yield Static("Template:", classes="field-label")
             yield Select(

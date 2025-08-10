@@ -3,25 +3,21 @@ from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.widget import Widget
 from textual.widgets import Button
-from textual_pyfiglet import FigletWidget
+from textual.widgets import Static
+
 
 from devtool.screens.new_project import NewProjectScreen
 from devtool.screens.stats import StatsScreen
+from devtool.config import HOME_TITLE
 
 
 class Home(Widget):
 
     def compose(self) -> ComposeResult:
 
-        yield FigletWidget(
-            "DEV TOOLS",
+        yield Static(
+            HOME_TITLE,
             classes="title",
-            font="ansi_shadow",
-            animate=True,
-            animation_type="gradient",
-            justify="center",
-            fps=5,
-            colors=["lightblue", "grey"],
         )
         with Vertical(classes="menu"):
             with Horizontal(classes="buttons"):

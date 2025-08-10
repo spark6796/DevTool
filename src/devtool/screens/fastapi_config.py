@@ -5,10 +5,9 @@ from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.screen import Screen
 from textual.widgets import Button, Select, Static
-from textual_pyfiglet import FigletWidget
 
 from devtool.project_creators.fastapi_creater import FastApiCreator
-
+from devtool.config import FASTAPI_TITLE
 
 class FastApiConfigScreen(Screen):
 
@@ -20,15 +19,9 @@ class FastApiConfigScreen(Screen):
     def compose(self) -> ComposeResult:
 
         with Vertical(classes="options-group"):
-            yield FigletWidget(
-                "FASTAPI",
+            yield Static(
+                FASTAPI_TITLE,
                 classes="config-title",
-                font="ansi_shadow",
-                animate=True,
-                animation_type="gradient",
-                justify="center",
-                fps=5,
-                colors=["green", "lightgreen"],
             )
             yield Static("Package Manager:", classes="field-label")
             yield Select(
