@@ -7,7 +7,7 @@ from textual.screen import Screen
 from textual.widgets import Button, Select, Static
 from textual_pyfiglet import FigletWidget
 
-from ..project_creators.fastapi_creater import FastApiCreator
+from devtool.project_creators.fastapi_creater import FastApiCreator
 
 
 class FastApiConfigScreen(Screen):

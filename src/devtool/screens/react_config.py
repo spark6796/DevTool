@@ -7,8 +7,8 @@ from textual.screen import Screen
 from textual.widgets import Button, Checkbox, Select, Static
 from textual_pyfiglet import FigletWidget
 
-from ..config import react_addons
-from ..project_creators.react_creator import ReactCreator
+from devtool.config import react_addons
+from devtool.project_creators.react_creator import ReactCreator
 
 
 class ReactConfigScreen(Screen):
@@ -100,6 +100,11 @@ class ReactConfigScreen(Screen):
 
             self.app.notify(
                 f"✅ React project '{self.project_name}' created successfully! at {final_path}"
+            )
+
+            self.app.notify(
+                "Please be patient let the project setup it may take a while...",
+                severity="information",
             )
 
             self.app.pop_screen()

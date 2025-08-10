@@ -1,6 +1,6 @@
 import subprocess
 
-from ..config import svelte_addons
+from devtool.config import svelte_addons
 
 
 class SvelteCreator:

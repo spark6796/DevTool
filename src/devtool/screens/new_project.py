@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 import threading
 import tkinter as tk
@@ -10,10 +11,10 @@ from textual.containers import Container, Horizontal
 from textual.screen import Screen
 from textual.widgets import Button, Input, Select, Static
 
-from ..utils.project_validator import validate_project
-from .fastapi_config import FastApiConfigScreen
-from .react_config import ReactConfigScreen
-from .svelte_config import SvelteConfigScreen
+from devtool.screens.fastapi_config import FastApiConfigScreen
+from devtool.screens.react_config import ReactConfigScreen
+from devtool.screens.svelte_config import SvelteConfigScreen
+from devtool.utils.project_validator import validate_project
 
 
 class NewProjectScreen(Screen):
@@ -105,36 +106,73 @@ class NewProjectScreen(Screen):
 
             self.create_project(name, project_type, project_path)
 
-    def create_project(self, name: str, project_type: str, directory: Path) -> None:
-
+    def check_node_installation(self) -> bool:
         try:
+            subprocess.run(
+                ["node", "--version"], check=True, stdout=subprocess.DEVNULL, shell=True
+            )
+            subprocess.run(
+                ["npm", "--version"], check=True, stdout=subprocess.DEVNULL, shell=True
+            )
+            self.app.notify("Node.js and npm are installed.", severity="success")
+            return True
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            self.app.notify(
+                "❌ Node.js and npm are required to create React or Svelte projects.",
+                severity="error",
+            )
+            return False
+        except Exception as e:
+            self.app.notify(
+                f"❌ Error checking Node.js installation: {str(e)}", severity="error"
+            )
+            return False
 
+    def create_project(self, name: str, project_type: str, directory: Path) -> None:
+        try:
             original_cwd = os.getcwd()
             os.chdir(directory)
 
-            if project_type == "svelte_app":
-                self.app.push_screen(SvelteConfigScreen(name, directory))
-            elif project_type == "react_app":
-                self.app.push_screen(ReactConfigScreen(name, directory))
+            if project_type in ["react_app", "svelte_app"]:
+                has_node = self.check_node_installation()
+
+                if has_node:
+                    if project_type == "svelte_app":
+                        self.app.push_screen(SvelteConfigScreen(name, directory))
+                    else:
+                        self.app.push_screen(ReactConfigScreen(name, directory))
+                else:
+                    self.app.notify(
+                        "Using template as Node.js is not installed...",
+                        severity="warning",
+                    )
+                    template_base = Path(__file__).parent.parent / "templates"
+                    template_dir = template_base / (
+                        "react" if project_type == "react_app" else "svelte"
+                    )
+
+                    if not template_dir.exists():
+                        self.app.notify(
+                            f"❌ Template not found for {project_type}",
+                            severity="error",
+                        )
+                        return
+
+                    project_path = directory / name
+                    shutil.copytree(template_dir, project_path)
+                    self.app.notify(
+                        f"✅ Project created from template at {project_path}",
+                        severity="success",
+                    )
+                    self.app.notify(
+                        "⚠️ Install Node.js to use all features: https://nodejs.org",
+                        severity="warning",
+                    )
+                    self.app.pop_screen()
+
             elif project_type == "fastapi_app":
                 self.app.push_screen(FastApiConfigScreen(name, directory))
 
-        except subprocess.CalledProcessError as e:
-            self.app.notify(
-                f"❌ Failed to create project: {e.stderr or 'Unknown error'}"
-            )
-        except FileNotFoundError as e:
-            os.chdir(original_cwd)
-            if "npx" in str(e):
-                error_msg = "❌ Node.js/npx not found. Please install Node.js first."
-            elif "npm" in str(e):
-                error_msg = "❌ npm not found. Please install Node.js first."
-            else:
-                error_msg = f"❌ Command not found: {str(e)}"
-            self.app.notify(error_msg)
-
         except Exception as e:
             os.chdir(original_cwd)
-            self.app.notify(
-                f"❌ Error creating project: {str(e)}",
-            )
+            self.app.notify(f"❌ Error creating project: {str(e)}", severity="error")

@@ -7,8 +7,8 @@ from textual.screen import Screen
 from textual.widgets import Button, Checkbox, Select, Static
 from textual_pyfiglet import FigletWidget
 
-from ..config import svelte_addons
-from ..project_creators.svelte_creator import SvelteCreator
+from devtool.config import svelte_addons
+from devtool.project_creators.svelte_creator import SvelteCreator
 
 
 class SvelteConfigScreen(Screen):
@@ -111,6 +111,11 @@ class SvelteConfigScreen(Screen):
 
             self.app.notify(
                 f"✅ Svelte project '{self.project_name}' created successfully! at {final_path}"
+            )
+
+            self.app.notify(
+                "Please be patient let the project setup it may take a while...",
+                severity="information",
             )
 
             self.app.pop_screen()

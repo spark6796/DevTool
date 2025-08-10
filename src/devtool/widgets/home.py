@@ -5,8 +5,8 @@ from textual.widget import Widget
 from textual.widgets import Button
 from textual_pyfiglet import FigletWidget
 
-from ..screens.new_project import NewProjectScreen
-from ..screens.stats import StatsScreen
+from devtool.screens.new_project import NewProjectScreen
+from devtool.screens.stats import StatsScreen
 
 
 class Home(Widget):
@@ -27,7 +27,6 @@ class Home(Widget):
             with Horizontal(classes="buttons"):
                 yield Button("📊 Project Stats", id="stats", variant="primary")
                 yield Button("🚀 New Project", id="new_project", variant="success")
-                yield Button("⚙  Utilities", id="utils")
                 yield Button("✖  Exit", id="exit", variant="error")
 
     @on(Button.Pressed, "#exit")
@@ -38,10 +37,6 @@ class Home(Widget):
     def handle_stats(self, event: Button.Pressed) -> None:
         self.app.notify("Opening Project Stats...")
         self.app.push_screen(StatsScreen())
-
-    @on(Button.Pressed, "#utils")
-    def handle_utils(self, event: Button.Pressed) -> None:
-        self.app.notify("Opening utils...")
 
     @on(Button.Pressed, "#new_project")
     def handle_new(self, event: Button.Pressed) -> None:

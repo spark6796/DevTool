@@ -1,37 +1,12 @@
-import os
 import shutil
-import subprocess
 from pathlib import Path
 
 template_dir = Path(__file__).parent.parent / "templates" / "fastapi"
 
 
 class FastApiCreator:
+    @classmethod
+    def create(cls, name: str, project_directory: Path) -> None:
 
-    @staticmethod
-    def create(name: str, project_directory: Path) -> subprocess.CompletedProcess:
-        project_directory = project_directory / name
-
-        shutil.copytree(template_dir, project_directory)
-
-        subprocess.run(
-            ["uv", "init", "--app"],
-            check=True,
-            capture_output=True,
-            shell=True,
-            cwd=name,
-            text=True,
-        )
-
-        result2 = subprocess.run(
-            ["uv", "add", "fastapi", "--extra", "standard"],
-            check=True,
-            capture_output=True,
-            shell=True,
-            cwd=name,
-            text=True,
-        )
-
-        os.remove(project_directory / "main.py")
-
-        return result2
+        project_path = project_directory / name
+        shutil.copytree(template_dir, project_path)

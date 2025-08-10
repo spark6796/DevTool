@@ -21,11 +21,6 @@ NewProjectScreen .form-buttons {
         align: center middle;
     
     }
-NewProjectScreen .form-container {
-        width: 60;
-        height: auto;
-        padding: 2;
-    }
 
 NewProjectScreen .form-container {
         width: 60;
