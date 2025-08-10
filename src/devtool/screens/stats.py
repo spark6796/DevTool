@@ -78,8 +78,9 @@ class StatsScreen(Screen):
                 repos = [repo for repo in resp.json() if not repo["fork"]]
                 if repos:
                     for repo in repos:
+                        id = repo["name"].replace(".", "_").replace("-", "_")
                         repo_list.append(
-                            ListItem(Static(repo["name"]), id=repo["name"])
+                            ListItem(Static(repo["name"]), id=id)
                         )
                     repo_list.focus()
                 else:
@@ -94,9 +95,9 @@ class StatsScreen(Screen):
                 )
 
     async def on_list_view_selected(self, event: ListView.Selected) -> None:
-        repo_name = event.item.id
+        repo_name = event.item.children[0].render()
         username = self.query_one("#username_input", Input).value.strip()
-        if repo_name and repo_name not in ["error", "empty"]:
+        if repo_name and repo_name not in ["User not found or error!", "No repositories found!"]:
             async with httpx.AsyncClient() as client:
                 resp = await client.get(f"{GITHUB_API}/repos/{username}/{repo_name}")
                 if resp.status_code == 200:
