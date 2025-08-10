@@ -3,7 +3,7 @@ from devtool.app import DevTools
 
 def main():
     app = DevTools()
-    app.run(headless=False)
+    app.run()
 
 
 if __name__ == "__main__":
