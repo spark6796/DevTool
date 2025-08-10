@@ -75,24 +75,28 @@ class StatsScreen(Screen):
         
         resp = requests.get(f"{GITHUB_API}/users/{username}/repos")
         if resp.status_code == 200:
-                repos = [repo for repo in resp.json() if not repo["fork"]]
-                if repos:
-                    for repo in repos:
-                        id = repo["name"].replace(".", "_").replace("-", "_")
-                        repo_list.append(
-                            ListItem(Static(repo["name"]), id=id)
-                        )
-                    repo_list.focus()
-                else:
-                    self.app.notify("User has no repositories", severity="warning")
+            repos = [repo for repo in resp.json() if not repo["fork"]]
+            if repos:
+                for repo in repos:
+                    repo_id = f"repo_{repo['name']}".replace(".", "_").replace("-", "_").replace(" ", "_")
+                    repo_id = ''.join(c if c.isalnum() or c == '_' else '_' for c in repo_id)
+                    if repo_id[0].isdigit():
+                        repo_id = f"repo_{repo_id}"
+                    
                     repo_list.append(
-                        ListItem(Static("No repositories found!"), id="empty")
+                        ListItem(Static(repo["name"]), id=repo_id)
                     )
-        else:
-                self.app.notify(resp.json()["message"], severity="error")
+                repo_list.focus()
+            else:
+                self.app.notify("User has no repositories", severity="warning")
                 repo_list.append(
-                    ListItem(Static("User not found or error!"), id="error")
+                    ListItem(Static("No repositories found!"), id="empty")
                 )
+        else:
+            self.app.notify(resp.json()["message"], severity="error")
+            repo_list.append(
+                ListItem(Static("User not found or error!"), id="error")
+            )
 
     async def on_list_view_selected(self, event: ListView.Selected) -> None:
         repo_name = event.item.children[0].render()
