@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 
-import httpx
+import requests
 from textual.containers import Container, Horizontal, Vertical
 from textual.screen import Screen
 from textual.widgets import Button, Input, ListItem, ListView, Static
@@ -72,9 +72,9 @@ class StatsScreen(Screen):
         repo_list = self.query_one("#repo_list", ListView)
         repo_list.clear()
         self.query_one("#repo_stats", RepoStats).update()
-        async with httpx.AsyncClient() as client:
-            resp = await client.get(f"{GITHUB_API}/users/{username}/repos")
-            if resp.status_code == 200:
+        
+        resp = requests.get(f"{GITHUB_API}/users/{username}/repos")
+        if resp.status_code == 200:
                 repos = [repo for repo in resp.json() if not repo["fork"]]
                 if repos:
                     for repo in repos:
@@ -88,7 +88,7 @@ class StatsScreen(Screen):
                     repo_list.append(
                         ListItem(Static("No repositories found!"), id="empty")
                     )
-            else:
+        else:
                 self.app.notify(resp.json()["message"], severity="error")
                 repo_list.append(
                     ListItem(Static("User not found or error!"), id="error")
@@ -98,11 +98,10 @@ class StatsScreen(Screen):
         repo_name = event.item.children[0].render()
         username = self.query_one("#username_input", Input).value.strip()
         if repo_name and repo_name not in ["User not found or error!", "No repositories found!"]:
-            async with httpx.AsyncClient() as client:
-                resp = await client.get(f"{GITHUB_API}/repos/{username}/{repo_name}")
-                if resp.status_code == 200:
+            resp = requests.get(f"{GITHUB_API}/repos/{username}/{repo_name}")
+            if resp.status_code == 200:
                     stats = resp.json()
-                    commits_resp = await client.get(
+                    commits_resp = requests.get(
                         f"{GITHUB_API}/repos/{username}/{repo_name}/commits",
                         params={"per_page": 100},
                     )
@@ -122,7 +121,7 @@ class StatsScreen(Screen):
 
                         stats["commits_count"] = total_commits
                     self.query_one("#repo_stats", RepoStats).update_stats(stats)
-                else:
+            else:
                     self.query_one("#repo_stats", RepoStats).update(
                         "Repo not found or error!"
                     )
