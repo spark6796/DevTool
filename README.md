@@ -2,12 +2,27 @@
 
 DevTool is a handy utility designed to simplify your development workflow.
 
-## Installation
+## 🚀 How to Run
 
-### Windows
+**Step 1** : Clone the project or downloaded the code manually
+```bash
+git clone https://github.com/spark6796/DevTool.git
+cd .\DevTool
+```
 
-Download the latest release from [Releases](https://github.com/spark6796/DevTool/releases).
+**Step 2** : Make sure you have [uv](https://github.com/astral-sh/uv) installed.
+if not then install uv
+```bash
+pip install uv
+```
 
-Extract the ZIP file and run `Devtool.exe`.
+**Step 3** : Then just run:
+
+```bash
+uv sync
+cd .\src\
+uv run -m devtool
+```
 
 <img width="1108" height="590" alt="Untitled design" src="https://github.com/user-attachments/assets/13cfad6e-f078-4810-9ccf-5a7faa97bc97" />
+
